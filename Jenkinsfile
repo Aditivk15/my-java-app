@@ -2,56 +2,27 @@ pipeline {
     agent any
 
     tools {
-        jdk 'jdk11'      // must match Jenkins Global Tool Configuration
-        maven 'maven3'   // must match Jenkins Global Tool Configuration
+        jdk 'JDK21'                // Use exact name from Global Tool Config
+        maven 'Maven 3.9.11'       // Use exact name from Global Tool Config
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                echo 'Checking out source code...'
-                checkout scm
+                git 'https://github.com/Aditivk15/my-java-app.git'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Building the project...'
-                bat 'mvn clean compile'
+                bat 'mvn clean package'
             }
         }
 
-        stage('Test') {
+        stage('Run App') {
             steps {
-                echo 'Running unit tests...'
-                bat 'mvn test'
+                bat 'java -jar target\\*.jar'
             }
-            post {
-                always {
-                    junit '**/target/surefire-reports/*.xml'
-                }
-            }
-        }
-
-        stage('Package') {
-            steps {
-                echo 'Packaging JAR...'
-                bat 'mvn package'
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
-            }
-        }
-
-        stage('Run Application') {
-            steps {
-                echo 'Running the application...'
-                bat 'java -jar target/*.jar'
-            }
-        }
-    }
-
-    post {
-        always {
-            echo "Pipeline execution finished."
         }
     }
 }
