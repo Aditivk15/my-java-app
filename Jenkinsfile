@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         jdk 'JDK21'
-        maven 'Maven 3.9.11'
+        maven 'Maven 3.911'
     }
 
     stages {
@@ -21,7 +21,7 @@ pipeline {
 
         stage('Run App') {
             steps {
-                bat 'java -jar target\\*.jar'
+                bat 'java -jar target\\my-java-app-1.0-SNAPSHOT.jar'
             }
         }
     }
