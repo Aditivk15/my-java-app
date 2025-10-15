@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     tools {
-        jdk 'JDK21'                // Use exact name from Global Tool Config
-        maven 'Maven 3.9.11'       // Use exact name from Global Tool Config
+        jdk 'JDK21'
+        maven 'Maven 3.9.11'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Aditivk15/my-java-app.git'
+                git branch: 'main', url: 'https://github.com/Aditivk15/my-java-app.git'
             }
         }
 
